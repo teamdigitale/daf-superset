@@ -1,3 +1,68 @@
 ---
 
-# This file is mandatory if your're building a new container - please remove instead it if it's not needed
+version: '2'
+
+services:
+
+  superset:
+    container_name: superset
+    image: amancevice/superset:0.20.6
+    volumes:
+      - ./superset_custom:/etc/superset
+    ports:
+        - 8088:8088/tcp
+    environment:
+      SUPERSET_ADMIN_FIRST_NAME: "admin"
+      SUPERSET_ADMIN_LAST_NAME: "admin"
+      SUPERSET_ADMIN_EMAIL: "admin@email.it"
+      SUPERSET_ADMIN_USER: "supersetadmin"
+      SUPERSET_ADMIN_PASS: "supersetpassword"
+      SUPERSET_SECRET_KEY: "xxx"
+      SUPERSET_MAPBOX_API_KEY: "your_mapbox_api_key"
+      SUPERSET_DEBUG: "true"
+      SUPERSET_DEBUG_LEVEL: "DEBUG"
+      SUPERSET_ENABLE_USER_REGISTRATION: "false"
+      # SUPERSET_AUTH_TYPE can be either
+      # AUTH_DB (local auth) or AUTH_LDAP (LDAP based auth)
+      SUPERSET_AUTH_TYPE: "AUTH_DB"
+      SUPERSET_LDAP_URI: "your_ldap_uri"
+      SUPERSET_LDAP_BASE_DN: "your_ldap_base_dn"
+      SUPERSET_LDAP_UID_FIELD: "your_ldap_uid_field"
+      SUPERSET_LDAP_FIRST_NAME_FIELD: "your_ldap_first_name_field"
+      SUPERSET_LDAP_LAST_NAME_FIELD: "your_ldap_last_name_field"
+      SUPERSET_LDAP_EMAIL_FIELD: "your_ldap_email_field"
+      SUPERSET_LDAP_BIND_USER: "your_ldap_bind_user"
+      SUPERSET_LDAP_BIND_PASS: "your_ldap_bind_pass"
+      SUPERSET_LDAP_ALLOW_SELF_SIGNED: "true"
+      SUPERSET_REDIS_HOST: "redis"
+      SUPERSET_REDIS_PORT: 6379
+      SUPERSET_REDIS_DB: 1
+      SUPERSET_REDIS_CACHE_PREFIX: "_superset"
+      SUPERSET_POSTGRES_HOST: "postgres"
+      SUPERSET_POSTGRES_PORT: 5432
+      SUPERSET_POSTGRES_USER: "superset"
+      SUPERSET_POSTGRES_PASS: "superset"
+      SUPERSET_POSTGRES_DB: "superset"
+    stdin_open: true
+    tty: true
+    depends_on:
+      - postgres
+      - redis
+
+  postgres:
+    container_name: superset-postgres
+    image: postgres:10.8
+    ports:
+      - 5432:5432/tcp
+    environment:
+      POSTGRES_DB: superset
+      POSTGRES_USER: superset
+      POSTGRES_PASSWORD: superset
+    stdin_open: true
+    tty: true
+
+  redis:
+    container_name: superset-redis
+    image: redis:5.0.5
+    stdin_open: true
+    tty: true
