@@ -18,14 +18,14 @@ services:
       SUPERSET_ADMIN_USER: "supersetadmin"
       SUPERSET_ADMIN_PASS: "supersetpassword"
       SUPERSET_SECRET_KEY: "xxx"
-      SUPERSET_MAPBOX_API_KEY: "your_mapbox_api_key"
+      SUPERSET_MAPBOX_API_KEY: "xxx"
       SUPERSET_DEBUG: "true"
       SUPERSET_DEBUG_LEVEL: "DEBUG"
       SUPERSET_ENABLE_USER_REGISTRATION: "false"
       # SUPERSET_AUTH_TYPE can be either
       # AUTH_DB (local auth) or AUTH_LDAP (LDAP based auth)
-      SUPERSET_AUTH_TYPE: "AUTH_DB"
-      SUPERSET_LDAP_URI: "your_ldap_uri"
+      SUPERSET_AUTH_TYPE: "AUTH_LDAP"
+      SUPERSET_LDAP_URI: "ldap://your_ldapserver.local"
       SUPERSET_LDAP_BASE_DN: "your_ldap_base_dn"
       SUPERSET_LDAP_UID_FIELD: "your_ldap_uid_field"
       SUPERSET_LDAP_FIRST_NAME_FIELD: "your_ldap_first_name_field"
@@ -43,6 +43,7 @@ services:
       SUPERSET_POSTGRES_USER: "superset"
       SUPERSET_POSTGRES_PASS: "superset"
       SUPERSET_POSTGRES_DB: "superset"
+    restart: always
     stdin_open: true
     tty: true
     depends_on:
@@ -58,11 +59,13 @@ services:
       POSTGRES_DB: superset
       POSTGRES_USER: superset
       POSTGRES_PASSWORD: superset
+    restart: always
     stdin_open: true
     tty: true
 
   redis:
     container_name: superset-redis
     image: redis:5.0.5
+    restart: always
     stdin_open: true
     tty: true
