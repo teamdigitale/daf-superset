@@ -1,10 +1,8 @@
-# {MY_REPO} for Piattaforma Digitale Nazionale Dati (PDND), previously DAF
+# SuperSet for Piattaforma Digitale Nazionale Dati (PDND), previously DAF
 
-> Insert here the application logo and badges if present.
+Superset is a Business Intelligence open source web application, originally developed by AirBnB. With SuperSet you can create charts ("slices" following the SuperSet terminology), expose dashboards and execute SQL queries.
 
-> Insert here warnings if necessary (ie. if this is a not stable version).
-
-> Insert here a brief description of what your repository contains. Insert also links to the last release, the official page, the extended documentation, and other useful external resources.
+Superset has been integrated within the PDND projectto offer users the ability to create own analysis and share them with the rest of the community.
 
 ## What is the PDND (previously DAF)?
 
@@ -12,34 +10,35 @@ PDND stays for "Piattaforma Digitale Nazionale Dati" (the Italian Digital Data P
 
 You can find more informations about the PDND on the official [Digital Transformation Team website](https://teamdigitale.governo.it/it/projects/daf.htm).
 
-## What is {MY_REPO}?
-
-> Insert here an extended description of the project with informations about context, goals, stakeholders, use cases, and finally the role of the project within the PDND with links to other repositories requiring this code or this code depends on. Embed also screenshots or video if present to give a preview of the application.
-
-> Insert here informations about files and folders structure, branch model adopted and release policy.
-
-### Tools references *(optional)*
-
-This project references the following tools.
-
-* [Tool 1](https://link-to-tool-1.com/)
-* [Tool 2](https://link-to-tool-2.com/)
-
 ### Project components *(optional)*
 
-This project depends by the following components.
+Superset makes use of the following additional components (download from other repositories).
 
-* **Component 1** version X.Y.Z, available [here](https://link-to-your-external-component).
+* **Redis** version 5.0.5. Redis is automatically pulled in as a dependency from its [official Docker repository](https://hub.docker.com/_/redis).
 
-* **Component 2** version X.Y.Z, available [here](https://link-to-your-external-component).
+* **PostgreSQL** version 10.9. Postgres is automatically pulled in as a dependency from its [official Docker repository](https://hub.docker.com/_/postgres).
 
-## How to install and use {MY_REPO} *(optional)*
+## How to build and test Superset
 
-> Insert here a brief documentation to use this project as an end-user (not a developer) if applicable, including pre-requisites and internal and external dependencies. Insert a link to an extended documentation (user manual) if present.
+In this repository, Superset and its related tools are redistributed as a set of Docker containers interacting with one each other.
 
-## How to build and test {MY_REPO}
+The `dockerfile` and the `docker-compose.yaml` files are in the root of this repository.
 
-> Insert here a brief documentation for the developer to build, test and contribute. Insert a link to an extended documentation (developer manual) if present.
+To build the local test environment (build the Superset container and download dependencies) run:
+
+```shell
+docker-compose up -d
+```
+
+>NOTE: the `docker-compose.yaml` file sets different environment variables that could be used to adapt and customized many platform functionalities.
+
+Then, access the CKAN GUI in a browser at `http://localhost:8088`.
+
+To bring down the test environment and remove the containers use
+
+```shell
+docker-compose down
+```
 
 ## How to contribute
 
